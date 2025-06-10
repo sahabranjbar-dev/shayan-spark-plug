@@ -3,17 +3,20 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white shadow-md text-black">
       <div className="container mx-auto flex justify-between items-center p-4">
         <Link href="/">
           <Image
-            src="/images/logo.png"
+            src="/logo-removebg.png"
             alt="لوگو شرکت"
             width={120}
             height={50}
           />
         </Link>
         <nav className="flex gap-6">
+          <Link href="/" className="hover:text-blue-600">
+            صفحه اصلی
+          </Link>
           <Link href="/products" className="hover:text-blue-600">
             محصولات
           </Link>

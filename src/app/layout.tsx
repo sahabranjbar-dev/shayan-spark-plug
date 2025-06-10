@@ -1,7 +1,109 @@
-import { Inter } from "next/font/google";
+// layout.tsx
+import React from "react";
+import LocalFont from "next/font/local";
 import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+export const metadata = {
+  title: "shayan spark plug | شمع خودرو شایان",
+  openGraph: {
+    title: "شمع خودرو شایان | فروش تخصصی شمع خودرو",
+    url: "https://shayansparkplug.com",
+    type: "website",
+    images: [
+      {
+        url: "https://shayansparkplug.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "شمع خودرو شایان - فروش تخصصی شمع خودرو",
+      },
+    ],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+  },
+  manifest: "/site.webmanifest",
+  themeColor: "#ffffff",
+  appleWebApp: {
+    capable: true,
+    title: "شمع خودرو شایان",
+    statusBarStyle: "default",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+    other: [
+      {
+        rel: "icon",
+        url: "/favicon-32x32.png",
+        sizes: "32x32",
+      },
+      {
+        rel: "icon",
+        url: "/favicon-48x48.png",
+        sizes: "48x48",
+      },
+    ],
+  },
+  robotsTxt: {
+    policy: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/admin", "/private"],
+      },
+    ],
+    sitemap: "https://shayansparkplug.com/sitemap.xml",
+  },
+  manifestDescription: "فروش تخصصی شمع خودرو با بهترین قیمت و کیفیت",
+  manifestName: "شمع خودرو شایان",
+  manifestShortName: "شایان شمع",
+  manifestThemeColor: "#ffffff",
+  manifestBackgroundColor: "#ffffff",
+  manifestIcons: [
+    {
+      src: "/favicon-32x32.png",
+      sizes: "32x32",
+      type: "image/png",
+    },
+    {
+      src: "/favicon-192x192.png",
+      sizes: "192x192",
+      type: "image/png",
+    },
+    {
+      src: "/favicon-512x512.png",
+      sizes: "512x512",
+      type: "image/png",
+    },
+  ],
+  robotsTxtContent:
+    "User-agent: *\nDisallow: /admin/\nDisallow: /private/\nSitemap: https://shayansparkplug.com/sitemap.xml",
+  titleTemplate: "%s | شمع خودرو شایان",
+  description: "فروش تخصصی شمع خودرو با بهترین قیمت",
+  keywords: ["شمع خودرو", "فروش شمع", "قیمت شمع"],
+  authors: [
+    { name: "Sahab", lastname: "Ranjbar", webSite: "https://sahabranjbar.dev" },
+  ],
+  creator: "Sahab Ranjbar",
+  applicationName: "شمع خودرو شایان",
+  category: "E-commerce",
+  viewport: "width=device-width, initial-scale=1",
+};
+
+const myFont = LocalFont({
+  src: [
+    {
+      path: "../../public/fonts/Samim-FD.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+});
 
 export default function RootLayout({
   children,
@@ -9,12 +111,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fa" dir="rtl">
-      <body className={inter.className}>{children}</body>
+    <html lang="fa" dir="rtl" className={`${myFont.className} antialiased`}>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
-export const metadata = {
-  title: "Next.js App",
-  description: "A simple Next.js application",
-};

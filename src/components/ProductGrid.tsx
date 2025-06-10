@@ -5,19 +5,19 @@ const products = [
     id: 1,
     name: "شمع NGK",
     price: "120,000 تومان",
-    image: "/images/ngk-spark.jpg",
+    image: "/logo.jpg",
   },
   {
     id: 2,
     name: "شمع Bosch",
     price: "95,000 تومان",
-    image: "/images/bosch-spark.jpg",
+    image: "/logo.jpg",
   },
   {
     id: 3,
     name: "شمع Denso",
     price: "110,000 تومان",
-    image: "/images/denso-spark.jpg",
+    image: "/logo.jpg",
   },
 ];
 
