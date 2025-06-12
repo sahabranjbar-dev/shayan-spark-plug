@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "shayan spark plug | شمع خودرو شایان",
+  title: "شمع خودرو شایان | shayan spark plug",
   openGraph: {
     title: "شمع خودرو شایان | فروش تخصصی شمع خودرو",
     url: "https://shayansparkplug.ir",
@@ -50,13 +50,6 @@ export const metadata = {
     ],
   },
   robotsTxt: {
-    policy: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: ["/admin", "/private"],
-      },
-    ],
     sitemap: "https://shayansparkplug.ir/sitemap.xml",
   },
   manifestDescription: "فروش تخصصی شمع خودرو با بهترین قیمت و کیفیت",
@@ -66,18 +59,8 @@ export const metadata = {
   manifestBackgroundColor: "#ffffff",
   manifestIcons: [
     {
-      src: "/favicon-32x32.png",
+      src: "/logo-removebg-preview.png",
       sizes: "32x32",
-      type: "image/png",
-    },
-    {
-      src: "/favicon-192x192.png",
-      sizes: "192x192",
-      type: "image/png",
-    },
-    {
-      src: "/favicon-512x512.png",
-      sizes: "512x512",
       type: "image/png",
     },
   ],

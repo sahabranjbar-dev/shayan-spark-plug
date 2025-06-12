@@ -1,9 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { Phone, MapPin } from "lucide-react";
-import { useEffect, useState } from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -17,9 +13,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import { MapPin, Menu, Phone } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Header() {
+  const pathname = usePathname();
+
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -121,49 +123,50 @@ export default function Header() {
             <div className="md:hidden">
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    </svg>
-                  </Button>
+                  <Menu size={24} />
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-                  <SheetTitle className="text-lg font-semibold mb-4">
-                    منوی سایت
+                  <SheetTitle className="self-end p-4">
+                    {/* <Search /> */}
                   </SheetTitle>
                   <nav className="flex flex-col gap-4">
                     <Link
                       href="/"
-                      className="block py-2 px-4 rounded hover:bg-accent hover:text-accent-foreground transition-colors"
+                      className={`block py-2 px-4 rounded transition-colors ${
+                        pathname === "/"
+                          ? "bg-accent text-accent-foreground"
+                          : "hover:bg-accent hover:text-accent-foreground"
+                      }`}
                     >
                       صفحه اصلی
                     </Link>
                     <Link
                       href="/products"
-                      className="block py-2 px-4 rounded hover:bg-accent hover:text-accent-foreground transition-colors"
+                      className={`block py-2 px-4 rounded transition-colors ${
+                        pathname === "/products"
+                          ? "bg-accent text-accent-foreground"
+                          : "hover:bg-accent hover:text-accent-foreground"
+                      }`}
                     >
                       محصولات
                     </Link>
                     <Link
                       href="/about"
-                      className="block py-2 px-4 rounded hover:bg-accent hover:text-accent-foreground transition-colors"
+                      className={`block py-2 px-4 rounded transition-colors ${
+                        pathname === "/about"
+                          ? "bg-accent text-accent-foreground"
+                          : "hover:bg-accent hover:text-accent-foreground"
+                      }`}
                     >
                       درباره ما
                     </Link>
                     <Link
                       href="/contact"
-                      className="block py-2 px-4 rounded hover:bg-accent hover:text-accent-foreground transition-colors"
+                      className={`block py-2 px-4 rounded transition-colors ${
+                        pathname === "/contact"
+                          ? "bg-accent text-accent-foreground"
+                          : "hover:bg-accent hover:text-accent-foreground"
+                      }`}
                     >
                       تماس با ما
                     </Link>

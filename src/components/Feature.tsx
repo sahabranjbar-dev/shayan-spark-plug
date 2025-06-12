@@ -1,4 +1,7 @@
+"use client";
+
 import { BookmarkCheck, Handshake, UserRound } from "lucide-react";
+import { motion } from "framer-motion";
 import React from "react";
 
 const Feature = () => {
@@ -38,14 +41,18 @@ const Feature = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-        {data.map((item) => (
-          <div
+        {data.map((item, index) => (
+          <motion.div
             key={item.id}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: index * 0.2 }}
             className="group p-6 md:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center bg-white hover:bg-blue-50"
           >
-            {/* Icon Container - Larger size for SVG background */}
+            {/* Icon Container */}
             <div className="relative w-32 h-32 md:w-36 md:h-36 mb-6 md:mb-8 flex items-center justify-center">
-              {/* Larger Pentagon SVG Background */}
+              {/* SVG Background */}
               <svg
                 className="absolute inset-0 w-full h-full transition-all duration-500 group-hover:fill-blue-500 group-hover:scale-110"
                 viewBox="0 0 283 300"
@@ -56,7 +63,7 @@ const Feature = () => {
                 <path d="M60.53 122L60.53 109C60.53 109 60.53 104 66.54 101L133.54 61C133.54 61 140.54 58.4 146.54 61L218.55 102C218.55 102 223.15 105 222.55 111L222.55 189C222.55 189 221.35 195.4 216.55 198L147.54 239C147.54 239 146.14 241.6 135.54 240L63.53 198C63.53 198 60.93 196.6 60.53 189L60.53 122Z" />
               </svg>
 
-              {/* Icon - Centered perfectly */}
+              {/* Icon */}
               <div className="relative z-10 text-blue-600 transition-all duration-500 group-hover:text-white">
                 <item.icon
                   size={40}
@@ -75,7 +82,7 @@ const Feature = () => {
                 {item.description}
               </p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
