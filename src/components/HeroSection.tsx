@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useEffect, useState } from "react";
 
 interface Slide {
   id: number;
@@ -63,6 +64,21 @@ const textVariants = {
 };
 
 const HeroSection = () => {
+  const [isDesktop, setIsDesktop] = useState<boolean>(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    // Check on mount
+    handleResize();
+
+    // Listen to resize
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const swiperConfig = {
     spaceBetween: 30,
     centeredSlides: true,
@@ -74,7 +90,7 @@ const HeroSection = () => {
       clickable: true,
       dynamicBullets: true,
     },
-    navigation: true,
+    navigation: isDesktop,
     modules: [Autoplay, Pagination, Navigation],
     loop: true,
     grabCursor: true,

@@ -119,7 +119,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="#"
+                  href="/"
                   className="text-gray-300 hover:text-blue-400 transition-colors"
                 >
                   صفحه اصلی
@@ -127,7 +127,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/products"
                   className="text-gray-300 hover:text-blue-400 transition-colors"
                 >
                   محصولات
@@ -135,7 +135,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/about"
                   className="text-gray-300 hover:text-blue-400 transition-colors"
                 >
                   درباره ما
@@ -143,7 +143,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/contact"
                   className="text-gray-300 hover:text-blue-400 transition-colors"
                 >
                   تماس با ما
@@ -151,7 +151,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/blogs"
                   className="text-gray-300 hover:text-blue-400 transition-colors"
                 >
                   وبلاگ

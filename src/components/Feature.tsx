@@ -32,8 +32,8 @@ const Feature = () => {
   return (
     <div className="container mx-auto px-4 py-12 md:py-16 rounded-lg text-center">
       <div className="max-w-3xl mx-auto mb-12 md:mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
-          شمع شایان اسپارک
+        <h2 className="text-4xl md:text-4xl font-semibold mb-4 text-gray-800">
+          Shayan Spark Plug
         </h2>
         <p className="text-gray-600 text-lg md:text-xl">
           پخش و توزیع شمع و لوازم یدکی خودرو در استان مازندران و گلستان
