@@ -9,11 +9,11 @@ export const metadata = {
   title: "shayan spark plug | شمع خودرو شایان",
   openGraph: {
     title: "شمع خودرو شایان | فروش تخصصی شمع خودرو",
-    url: "https://shayansparkplug.com",
+    url: "https://shayansparkplug.ir",
     type: "website",
     images: [
       {
-        url: "https://shayansparkplug.com/og-image.jpg",
+        url: "https://shayansparkplug.ir/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "شمع خودرو شایان - فروش تخصصی شمع خودرو",
@@ -57,7 +57,7 @@ export const metadata = {
         disallow: ["/admin", "/private"],
       },
     ],
-    sitemap: "https://shayansparkplug.com/sitemap.xml",
+    sitemap: "https://shayansparkplug.ir/sitemap.xml",
   },
   manifestDescription: "فروش تخصصی شمع خودرو با بهترین قیمت و کیفیت",
   manifestName: "شمع خودرو شایان",
@@ -82,7 +82,7 @@ export const metadata = {
     },
   ],
   robotsTxtContent:
-    "User-agent: *\nDisallow: /admin/\nDisallow: /private/\nSitemap: https://shayansparkplug.com/sitemap.xml",
+    "User-agent: *\nDisallow: /admin/\nDisallow: /private/\nSitemap: https://shayansparkplug.ir/sitemap.xml",
   titleTemplate: "%s | شمع خودرو شایان",
   description: "فروش تخصصی شمع خودرو با بهترین قیمت",
   keywords: ["شمع خودرو", "فروش شمع", "قیمت شمع"],
@@ -95,12 +95,10 @@ export const metadata = {
   viewport: "width=device-width, initial-scale=1",
 };
 
-const myFont = LocalFont({
+const samim = LocalFont({
   src: [
     {
       path: "../../public/fonts/Samim-FD.woff2",
-      weight: "500",
-      style: "normal",
     },
   ],
 });
@@ -111,7 +109,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fa" dir="rtl" className={`${myFont.className} antialiased`}>
+    <html lang="fa" dir="rtl" className={`${samim.className} antialiased`}>
       <body>
         <Header />
         {children}
