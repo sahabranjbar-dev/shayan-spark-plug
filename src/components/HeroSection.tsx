@@ -120,7 +120,7 @@ const HeroSection = () => {
                 loading="eager"
                 fetchPriority="high"
                 priority={slide.id === 1}
-                className="object-cover rounded-2xl"
+                className="object-contain rounded-2xl"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
 

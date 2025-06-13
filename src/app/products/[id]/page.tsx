@@ -231,7 +231,7 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
               >
                 <div className="relative h-40">
                   <Image
-                    src={`/products/spark-plug-${item}.jpg`}
+                    src={`/hero-${item}.jpg`}
                     alt={`محصول مشابه ${item}`}
                     fill
                     className="object-contain p-4"
