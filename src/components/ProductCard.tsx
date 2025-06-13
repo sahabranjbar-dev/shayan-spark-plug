@@ -9,13 +9,13 @@ interface Product {
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <div className="bg-white text-black p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+    <div className="bg-white text-black p-4 border rounded-lg shadow-md hover:shadow-lg transition-shadow flex-col justify-center">
       <Image
         src={product.image}
         alt={product.name}
         width={200}
         height={200}
-        className="mx-auto"
+        className="mx-auto max-h-64 h-64 min-h-64 object-contain"
       />
       <h3 className="text-lg font-semibold mt-4">{product.name}</h3>
       <Link

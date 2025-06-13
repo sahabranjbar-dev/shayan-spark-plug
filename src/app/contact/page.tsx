@@ -51,14 +51,14 @@ const Contact = () => {
 
         {/* شماره تماس */}
         <motion.div
-          className="mt-8 flex items-center gap-3 text-gray-800 text-lg font-semibold"
+          className=" flex items-center gap-3 text-gray-800 text-lg font-semibold"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <Phone className="w-6 h-6 text-blue-600" />
-          <a href="tel:+989369782424">0936-978-2424</a>
+          
+          <a href="tel:+989369782424" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-xl flex justify-between gap-2 items-center"><Phone className="w-6 h-6" />0936-978-2424 </a>
         </motion.div>
       </div>
     </div>

@@ -30,12 +30,12 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
       "عمر مفید 2 برابر شمع‌های معمولی",
       "کاهش مصرف سوخت تا 15%",
       "ساختار پلاتینیومی",
-      "گارانتی 24 ماهه",
     ],
     images: [
-      "/products/spark-plug-1.jpg",
-      "/products/spark-plug-2.jpg",
-      "/products/spark-plug-3.jpg",
+      `/hero-${id}.jpg`,
+      `/hero-${id}.jpg`,
+      `/hero-${id}.jpg`,
+      `/hero-${id}.jpg`,
     ],
   };
 
@@ -78,7 +78,7 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
                 className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition-all"
                 onClick={() =>
                   setSelectedImage((prev) =>
-                    prev > 0 ? prev - 1 : product.images.length - 1
+                    prev < product.images.length - 1 ? prev + 1 : 0
                   )
                 }
               >
@@ -88,7 +88,7 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
                 className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition-all"
                 onClick={() =>
                   setSelectedImage((prev) =>
-                    prev < product.images.length - 1 ? prev + 1 : 0
+                    prev > 0 ? prev - 1 : product.images.length - 1
                   )
                 }
               >
@@ -124,16 +124,16 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
             <div className="mb-6">
               {product.discountPrice && (
                 <div className="flex items-center">
-                  <span className="text-3xl font-bold text-gray-900">
+                  <span className="text-xl font-bold text-gray-900 text-nowrap">
                     {product.discountPrice.toLocaleString()} تومان
                   </span>
                   {product.price > product.discountPrice && (
-                    <span className="text-lg text-gray-500 line-through mr-3">
+                    <span className="text-lg text-gray-500 line-through mr-3 text-nowrap">
                       {product.price.toLocaleString()} تومان
                     </span>
                   )}
                   {product.price > product.discountPrice && (
-                    <span className="bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded mx-2">
+                    <span className="bg-red-100 text-red-800 text-xs font-semibold text-nowrap px-2 py-1 rounded mx-2">
                       {Math.round(
                         (1 - product.discountPrice / product.price) * 100
                       )}
@@ -192,17 +192,17 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
             {/* اطلاعات ارسال و گارانتی */}
             <div className="border-t pt-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center">
+              <div className="md:flex justify-between items-center">
+                <div className="flex items-center p-2">
                   <Truck className="w-5 h-5 text-blue-500 mx-2" />
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm text-gray-600 text-nowrap">
                     ارسال رایگان برای مازندران و گلستان
                   </span>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center p-2">
                   <Shield className="w-5 h-5 text-green-500 mx-2" />
                   <span className="text-sm text-gray-600">
-                    گارانتی {product.features[4]}
+                    ضمانت اصالت کالا
                   </span>
                 </div>
               </div>

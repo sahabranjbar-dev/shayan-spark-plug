@@ -24,7 +24,7 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 1,
-    image: "/hero-4.jpg",
+    image: "/hero-1.jpg",
     alt: "شمع خودروهای اصل و با کیفیت",
     title: "پخش تخصصی شمع خودرو",
     description: "ارائه بهترین برندهای جهانی با گارانتی اصالت کالا",
@@ -55,6 +55,17 @@ const slides: Slide[] = [
       link: "/contact",
     },
   },
+  {
+  id: 4,
+  image: "/hero-4.jpg",
+  alt: "ارسال سریع و مطمئن به سراسر ایران",
+  title: "ارسال سریع به سراسر کشور",
+  description: "سفارشات شما در کوتاه‌ترین زمان ممکن و با بسته‌بندی ایمن به دستتان می‌رسد.",
+  cta: {
+    text: "نحوه ارسال",
+    link: "/shipping-policy",
+  },
+}
 ];
 
 const textVariants = {
