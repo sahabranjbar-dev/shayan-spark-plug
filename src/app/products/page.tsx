@@ -12,28 +12,28 @@ const products = [
     title: "شمع خودرو مدل XT-5000",
     price: 380000,
     rating: 4.8,
-    image: "/products/spark-plug-1.jpg",
+    image: "/hero-1.jpg",
   },
   {
     id: "2",
     title: "شمع خودرو مدل XT-5500",
     price: 420000,
     rating: 4.6,
-    image: "/products/spark-plug-2.jpg",
+    image: "/hero-2.jpg",
   },
   {
     id: "3",
     title: "شمع خودرو مدل XT-6000",
     price: 450000,
     rating: 4.7,
-    image: "/products/spark-plug-3.jpg",
+    image: "/hero-3.jpg",
   },
   {
     id: "4",
     title: "شمع خودرو مدل XT-6500",
     price: 470000,
     rating: 4.9,
-    image: "/products/spark-plug-4.jpg",
+    image: "/hero-4.jpg",
   },
 ];
 
