@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use } from "react";
+import React, { use, useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Star,
@@ -13,31 +13,25 @@ import {
   Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Product } from "@/lib/types";
 const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
-  // داده‌های نمونه برای محصول
-  const product = {
-    id,
-    title: "شمع خودروی پریمیوم مدل XT-5000",
-    price: 450000,
-    discountPrice: 380000,
-    rating: 4.8,
-    reviewCount: 124,
-    description:
-      "شمع خودروی با کیفیت بالا با فناوری نانو برای عملکرد بهتر و مصرف سوخت بهینه. مناسب برای خودروهای سواری و اسپرت.",
-    features: [
-      "مقاومت بالا در برابر حرارت",
-      "عمر مفید 2 برابر شمع‌های معمولی",
-      "کاهش مصرف سوخت تا 15%",
-      "ساختار پلاتینیومی",
-    ],
-    images: [
-      `/hero-${id}.jpg`,
-      `/hero-${id}.jpg`,
-      `/hero-${id}.jpg`,
-      `/hero-${id}.jpg`,
-    ],
-  };
+
+  const [product, setProduct] = useState<Product | null>(null);
+  useEffect(() => {
+    const response = async () => {
+      const res = await fetch("/data/products.json");
+      const data = await res.json();
+      const foundProduct = data.products.find(
+        (p: Product) => String(p.id) === id
+      );
+      if (!foundProduct) {
+        throw new Error("Product not found");
+      }
+      setProduct(foundProduct);
+    };
+    response();
+  }, [id]);
 
   const [selectedImage, setSelectedImage] = React.useState(0);
   const [quantity, setQuantity] = React.useState(1);
@@ -48,16 +42,14 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-6 px-4 shadow-lg">
         <div className="container mx-auto">
           <h1 className="text-2xl md:text-3xl font-bold text-white">
-            {product.title}
+            {product?.name}
           </h1>
           <div className="flex items-center mt-2">
             <div className="flex items-center bg-white/20 px-2 py-1 rounded-full">
               <Star className="w-4 h-4 text-yellow-300 fill-yellow-300 mx-2" />
-              <span className="text-white text-sm ml-1">{product.rating}</span>
+              <span className="text-white text-sm ml-1">{product?.rating}</span>
             </div>
-            <span className="text-white/80 text-sm mr-2">
-              ({product.reviewCount} نظر)
-            </span>
+            <span className="text-white/80 text-sm mr-2">(2 نظر)</span>
           </div>
         </div>
       </div>
@@ -69,26 +61,34 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <div className="relative h-80 md:h-96 w-full">
               <Image
-                src={product.images[selectedImage]}
-                alt={product.title}
+                src={product?.images[selectedImage] || "/placeholder.png"}
+                alt={product?.name || "Product Image"}
                 fill
                 className="object-contain p-6"
               />
               <button
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition-all"
+                className="cursor-pointer absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition-all"
                 onClick={() =>
                   setSelectedImage((prev) =>
-                    prev < product.images.length - 1 ? prev + 1 : 0
+                    product &&
+                    product.images &&
+                    prev < product.images.length - 1
+                      ? prev + 1
+                      : 0
                   )
                 }
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition-all"
+                className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition-all"
                 onClick={() =>
                   setSelectedImage((prev) =>
-                    prev > 0 ? prev - 1 : product.images.length - 1
+                    prev > 0
+                      ? prev - 1
+                      : product?.images?.length
+                      ? product.images.length - 1
+                      : 0
                   )
                 }
               >
@@ -96,7 +96,7 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
               </button>
             </div>
             <div className="flex p-4 space-x-2 overflow-x-auto">
-              {product.images.map((img, index) => (
+              {product?.images.map((img, index) => (
                 <button
                   key={index}
                   className={`flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 ${
@@ -121,7 +121,7 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
           {/* اطلاعات محصول */}
           <div className="bg-white rounded-xl shadow-lg p-6">
             {/* قیمت و تخفیف */}
-            <div className="mb-6">
+            {/* <div className="mb-6">
               {product.discountPrice && (
                 <div className="flex items-center">
                   <span className="text-xl font-bold text-gray-900 text-nowrap">
@@ -142,16 +142,18 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
                   )}
                 </div>
               )}
-            </div>
+            </div> */}
 
             {/* ویژگی‌ها */}
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-3">ویژگی‌های محصول:</h3>
               <ul className="space-y-2">
-                {product.features.map((feature, index) => (
+                {product?.["benefits-and-properties"]?.map((feature, index) => (
                   <li key={index} className="flex items-start">
                     <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5 mr-2" />
-                    <span className="text-gray-700">{feature}</span>
+                    <span className="text-gray-700 text-sm md:text-lg">
+                      {feature}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -179,8 +181,8 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white h-12">
-                  <ShoppingCart className="w-5 h-5 ml-2" />
+                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white h-12 text-sm font-semibold">
+                  <ShoppingCart className="w-5 h-5" />
                   افزودن به سبد خرید
                 </Button>
                 <Button variant="outline" className="h-12">
@@ -195,14 +197,14 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
               <div className="md:flex justify-between items-center">
                 <div className="flex items-center p-2">
                   <Truck className="w-5 h-5 text-blue-500 mx-2" />
-                  <span className="text-sm text-gray-600 text-nowrap">
-                    ارسال رایگان برای مازندران و گلستان
+                  <span className="text-sm text-gray-600">
+                    ارسال مازندران و گلستان
                   </span>
                 </div>
                 <div className="flex items-center p-2">
                   <Shield className="w-5 h-5 text-green-500 mx-2" />
                   <span className="text-sm text-gray-600">
-                    ضمانت اصالت کالا
+                    گارانتی اصالت و کیفیت کالا
                   </span>
                 </div>
               </div>
@@ -213,13 +215,36 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
         {/* توضیحات محصول */}
         <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
           <h2 className="text-xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            توضیحات کامل محصول
+            مشخصات فنی
           </h2>
-          <p className="text-gray-700 leading-relaxed">{product.description}</p>
+
+          <div className="overflow-x-auto rounded-lg border border-gray-200">
+            <table className="min-w-full table-auto text-sm">
+              <tbody>
+                {product?.["technical-specifications"]?.map((spec, idx) =>
+                  Object.entries(spec).map(([key, value], i) => (
+                    <tr
+                      key={`${idx}-${i}`}
+                      className={`${
+                        (idx + i) % 2 === 0 ? "bg-gray-50" : "bg-white"
+                      } hover:bg-gray-100 transition-colors`}
+                    >
+                      <td className="py-3 px-4 text-gray-800 font-bold border-b border-gray-100">
+                        {key}
+                      </td>
+                      <td className="py-3 px-4 text-gray-600 border-b border-gray-100">
+                        {String(value)}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* محصولات مرتبط */}
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <h2 className="text-xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             محصولات مشابه
           </h2>
@@ -257,7 +282,7 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

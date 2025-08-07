@@ -1,43 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ShoppingCart, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-
-const products = [
-  {
-    id: "1",
-    title: "شمع خودرو مدل XT-5000",
-    price: 380000,
-    rating: 4.8,
-    image: "/hero-1.jpg",
-  },
-  {
-    id: "2",
-    title: "شمع خودرو مدل XT-5500",
-    price: 420000,
-    rating: 4.6,
-    image: "/hero-2.jpg",
-  },
-  {
-    id: "3",
-    title: "شمع خودرو مدل XT-6000",
-    price: 450000,
-    rating: 4.7,
-    image: "/hero-3.jpg",
-  },
-  {
-    id: "4",
-    title: "شمع خودرو مدل XT-6500",
-    price: 470000,
-    rating: 4.9,
-    image: "/hero-4.jpg",
-  },
-];
+import { Product } from "@/lib/types";
+import Link from "next/link";
 
 const Products = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/data/products.json");
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const data = await response.json();
+        setProducts(data?.products || []);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-10">
       {/* هدر */}
@@ -46,13 +36,13 @@ const Products = () => {
           محصولات ما
         </h1>
         <p className="text-gray-600 text-lg">
-          بهترین شمع‌های خودرو با کیفیت پریمیوم و عملکرد بالا
+          بهترین شمع‌های خودرو با کیفیت و عملکرد بالا
         </p>
       </div>
 
       {/* گرید محصولات */}
       <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product, index) => (
+        {products?.map((product, index) => (
           <motion.div
             key={product.id}
             className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all cursor-pointer"
@@ -63,15 +53,15 @@ const Products = () => {
           >
             <div className="relative h-48">
               <Image
-                src={product.image}
-                alt={product.title}
+                src={product.images?.[0] || "/placeholder.png"}
+                alt={product.name}
                 fill
                 className="object-contain p-4"
               />
             </div>
             <div className="p-4">
               <h3 className="font-semibold text-gray-800 mb-2 text-center">
-                {product.title}
+                {product.name}
               </h3>
               <div className="flex items-center justify-center mb-3">
                 <Star className="w-4 h-4 text-yellow-400 fill-yellow-400 ml-1" />
@@ -92,7 +82,7 @@ const Products = () => {
                 variant="outline"
                 className="w-full hover:bg-gray-100 transition-colors"
               >
-                مشاهده جزئیات
+                <Link href={`/products/${product.id}`}>مشاهده جزئیات</Link>
               </Button>
             </div>
           </motion.div>
