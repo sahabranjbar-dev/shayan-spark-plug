@@ -36,10 +36,10 @@ export default function Header() {
   return (
     <>
       {/* Top Info Bar */}
-      <div className="bg-blue-600 text-white text-sm py-2 px-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
+      <div className="bg-blue-600 text-white text-sm py-2 px-4 overflow-auto">
+        <div className="container mx-auto flex justify-between items-center w-full">
+          <div className="flex justify-between items-center gap-2 whitespace-nowrap text-xs sm:text-sm md:text-base w-full">
+            <div className="flex items-center gap-2 ">
               <Phone size={16} />
               <a
                 href="tel:+989369782424"
@@ -47,8 +47,16 @@ export default function Header() {
               >
                 0936-978-2424
               </a>
+              |
+              <a
+                href="tel:+989142990300"
+                className="hover:text-blue-200 transition-colors"
+              >
+                0914-2990-300
+              </a>
             </div>
-            <div className="flex items-center gap-2">
+
+            <div className="flex justify-between items-center gap-2 ">
               <MapPin size={16} />
               <span>مازندران، بابل</span>
             </div>
