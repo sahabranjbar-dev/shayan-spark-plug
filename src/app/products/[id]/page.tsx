@@ -11,9 +11,11 @@ import {
   Check,
   Truck,
   Shield,
+  PhoneOutgoing,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/lib/types";
+import Link from "next/link";
 const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
 
@@ -129,10 +131,14 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
                   </span>
 
                   {product.price && (
-                    <span className="bg-green-100 text-black p-4 m-2 font-semibold text-nowrap px-2 py-1 rounded mx-2 animate-pulse">
+                    <Link
+                      href="tel:+989369782424"
+                      className="bg-green-100 hover:underline text-black p-4 m-2 font-semibold text-justify rounded animate-pulse "
+                    >
                       به علت نوسانات ارز برای اطلاع از قیمت دقیق و به روز با
                       کارشناسان فروش ما تماس بگیرید
-                    </span>
+                      <PhoneOutgoing className="inline mr-2" size={16} />
+                    </Link>
                   )}
                 </div>
               )}
