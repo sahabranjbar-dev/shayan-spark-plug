@@ -59,7 +59,7 @@ const CTAButtons = () => {
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         <a
-          href="tel:+989369782424"
+          href="tel:+989142990300"
           className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-xl flex justify-between gap-2 items-center"
         >
           <Phone className="w-6 h-6" />
