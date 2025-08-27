@@ -130,9 +130,11 @@ export default function Header() {
 
             {/* Mobile Menu Button - using shadcn Sheet */}
             <div className="md:hidden">
-              <Sheet open={open}>
-                <SheetTrigger asChild onClick={() => setOpen(!open)}>
-                  <Menu size={24} />
+              <Sheet open={open} onOpenChange={setOpen}>
+                <SheetTrigger asChild>
+                  <button>
+                    <Menu size={24} />
+                  </button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                   <SheetTitle className="self-end p-4">
