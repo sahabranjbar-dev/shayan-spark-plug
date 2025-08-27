@@ -23,6 +23,7 @@ export default function Header() {
   const pathname = usePathname();
 
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -121,8 +122,8 @@ export default function Header() {
 
             {/* Mobile Menu Button - using shadcn Sheet */}
             <div className="md:hidden">
-              <Sheet>
-                <SheetTrigger asChild>
+              <Sheet open={open}>
+                <SheetTrigger asChild onClick={() => setOpen(!open)}>
                   <Menu size={24} />
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px]">
@@ -132,6 +133,7 @@ export default function Header() {
                   <nav className="flex flex-col gap-4">
                     <Link
                       href="/"
+                      onClick={() => setOpen(false)}
                       className={`block py-2 px-4 rounded transition-colors ${
                         pathname === "/"
                           ? "bg-accent text-accent-foreground"
@@ -142,6 +144,7 @@ export default function Header() {
                     </Link>
                     <Link
                       href="/products"
+                      onClick={() => setOpen(false)}
                       className={`block py-2 px-4 rounded transition-colors ${
                         pathname === "/products"
                           ? "bg-accent text-accent-foreground"
@@ -152,6 +155,7 @@ export default function Header() {
                     </Link>
                     <Link
                       href="/about"
+                      onClick={() => setOpen(false)}
                       className={`block py-2 px-4 rounded transition-colors ${
                         pathname === "/about"
                           ? "bg-accent text-accent-foreground"
@@ -162,6 +166,7 @@ export default function Header() {
                     </Link>
                     <Link
                       href="/contact"
+                      onClick={() => setOpen(false)}
                       className={`block py-2 px-4 rounded transition-colors ${
                         pathname === "/contact"
                           ? "bg-accent text-accent-foreground"
