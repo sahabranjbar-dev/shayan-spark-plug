@@ -121,28 +121,22 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
           {/* اطلاعات محصول */}
           <div className="bg-white rounded-xl shadow-lg p-6">
             {/* قیمت و تخفیف */}
-            {/* <div className="mb-6">
-              {product.discountPrice && (
+            <div className="mb-6">
+              {product?.price && (
                 <div className="flex items-center">
                   <span className="text-xl font-bold text-gray-900 text-nowrap">
-                    {product.discountPrice.toLocaleString()} تومان
+                    {product.price.toLocaleString()} تومان
                   </span>
-                  {product.price > product.discountPrice && (
-                    <span className="text-lg text-gray-500 line-through mr-3 text-nowrap">
-                      {product.price.toLocaleString()} تومان
-                    </span>
-                  )}
-                  {product.price > product.discountPrice && (
-                    <span className="bg-red-100 text-red-800 text-xs font-semibold text-nowrap px-2 py-1 rounded mx-2">
-                      {Math.round(
-                        (1 - product.discountPrice / product.price) * 100
-                      )}
-                      % تخفیف
+
+                  {product.price && (
+                    <span className="bg-green-100 text-black p-4 m-2 font-semibold text-nowrap px-2 py-1 rounded mx-2 animate-pulse">
+                      به علت نوسانات ارز برای اطلاع از قیمت دقیق و به روز با
+                      کارشناسان فروش ما تماس بگیرید
                     </span>
                   )}
                 </div>
               )}
-            </div> */}
+            </div>
 
             {/* ویژگی‌ها */}
             <div className="mb-6">

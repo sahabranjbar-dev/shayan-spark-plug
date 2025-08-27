@@ -29,13 +29,13 @@
         "پژو پارس",
         "موتور‌های با حجم ۱۸۰۰ cc (۸ سوپاپ)"
       ],
-      "price": 4000000,
+      "price": 650000,
       "rating": "4",
       "images": [
-        "/data/BKR6E/number1.jpeg",
-        "/data/BKR6E/number2.jpeg",
-        "/data/BKR6E/number3.jpeg",
-        "/data/BKR6E/number4.jpeg"
+        "/data/BKR6E/number1.webp",
+        "/data/BKR6E/number2.webp",
+        "/data/BKR6E/number3.webp",
+        "/data/BKR6E/number4.webp"
       ]
     },
     {
@@ -69,15 +69,14 @@
         "خودرو‌های چینی",
         "کیا سراتو"
       ],
-      "price": 4000000,
+      "price": 1000000,
       "rating": "4",
       "images": [
-        "/data/BKR6EGP/number1.jpeg",
-        "/data/BKR6EGP/number2.jpeg",
-        "/data/BKR6EGP/number3.jpeg",
-        "/data/BKR6EGP/number4.jpeg",
-        "/data/BKR6EGP/number5.jpeg",
-        "/data/BKR6EGP/number6.jpeg"
+        "/data/BKR6EGP/number1.webp",
+        "/data/BKR6EGP/number2.webp",
+        "/data/BKR6EGP/number3.webp",
+        "/data/BKR6EGP/number4.webp",
+        "/data/BKR6EGP/number5.webp"
       ]
     },
     {
@@ -111,14 +110,13 @@
         "مزدا ۳ قدیم",
         "برخی خودرو‌های چری و MVM"
       ],
-      "price": 30000000,
+      "price": 400000,
       "rating": "3",
       "images": [
-        "/data/K20PR/number1.jpeg",
-        "/data/K20PR/number2.jpeg",
-        "/data/K20PR/number3.jpeg",
-        "/data/K20PR/number4.jpeg",
-        "/data/K20PR/number5.jpeg"
+        "/data/K20PR/number1.webp",
+        "/data/K20PR/number2.webp",
+        "/data/K20PR/number3.webp",
+        "/data/K20PR/number4.webp"
       ]
     }
   ]
