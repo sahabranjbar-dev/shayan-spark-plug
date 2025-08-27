@@ -125,22 +125,24 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
             {/* قیمت و تخفیف */}
             <div className="mb-6">
               {product?.price && (
-                <div className="flex items-center">
-                  <span className="text-xl font-bold text-gray-900 text-nowrap">
-                    {product.price.toLocaleString()} تومان
-                  </span>
+                <>
+                  <div className="text-xl font-bold text-gray-900 text-nowrap">
+                    قیمت: {product.price.toLocaleString()} تومان
+                  </div>
 
-                  {product.price && (
-                    <Link
-                      href="tel:+989369782424"
-                      className="bg-green-100 hover:underline text-black p-4 m-2 font-semibold text-justify rounded animate-pulse "
-                    >
-                      به علت نوسانات ارز برای اطلاع از قیمت دقیق و به روز با
-                      کارشناسان فروش ما تماس بگیرید
-                      <PhoneOutgoing className="inline mr-2" size={16} />
-                    </Link>
-                  )}
-                </div>
+                  <div className="my-10 bg-green-100 p-4 text-justify">
+                    {product.price && (
+                      <Link
+                        href="tel:+989369782424"
+                        className=" hover:underline text-black font-semibold  rounded animate-pulse "
+                      >
+                        به علت نوسانات ارز برای اطلاع از قیمت دقیق و به روز با
+                        کارشناسان فروش ما تماس بگیرید
+                        <PhoneOutgoing className="inline mr-2" size={16} />
+                      </Link>
+                    )}
+                  </div>
+                </>
               )}
             </div>
 
@@ -181,7 +183,7 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white h-12 text-sm font-semibold">
+                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white h-12 text-xs md:text-sm font-semibold">
                   <ShoppingCart className="w-5 h-5" />
                   افزودن به سبد خرید
                 </Button>
