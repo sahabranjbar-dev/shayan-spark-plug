@@ -60,7 +60,7 @@ const Products = () => {
               />
             </div>
             <div className="p-4">
-              <h3 className="font-semibold text-gray-800 mb-2 text-center">
+              <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 overflow-ellipsis">
                 {product.name}
               </h3>
               <div className="flex items-center justify-center mb-3">
