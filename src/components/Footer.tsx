@@ -1,3 +1,4 @@
+"use client";
 import {
   Tooltip,
   TooltipContent,
@@ -10,8 +11,14 @@ import {
   Send,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  const isAuthPage =
+    pathname?.startsWith("/auth") || pathname?.startsWith("/dashboard");
+  if (isAuthPage) return;
   return (
     <footer className="bg-gradient-to-r from-gray-900 to-gray-800 text-white relative overflow-hidden">
       {/* موج دکوراتیو بالای فوتر */}
@@ -223,7 +230,12 @@ export default function Footer() {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
-                <a href="mailto:info@shayansparkplug.com" className="text-gray-300">info@shayansparkplug.com</a>
+                <a
+                  href="mailto:info@shayansparkplug.com"
+                  className="text-gray-300"
+                >
+                  info@shayansparkplug.com
+                </a>
               </li>
             </ul>
           </div>

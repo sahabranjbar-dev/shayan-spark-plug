@@ -4,13 +4,22 @@ export interface Product {
 }
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
-  "technical-specifications": any[];
-  "benefits-and-properties": any[];
-  cars: string[];
   price: number;
-  images: string[];
-  rating: number;
-  discountPrice?: number;
+  rating: any;
+  benefitsAndProperties: string[];
+  cars: string[];
+  images: any[];
+  createdAt: Date;
+  updatedAt: Date;
+  technicalSpecifications: TechnicalSpecification[];
+  rowNumber?: number;
+}
+
+export interface TechnicalSpecification {
+  id: string;
+  productId: string;
+  key: string;
+  value: string;
 }

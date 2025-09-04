@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Star,
@@ -16,41 +16,64 @@ import {
 import { Button } from "@/components/ui/button";
 import { Product } from "@/lib/types";
 import Link from "next/link";
-const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = use(params);
 
+interface ProductPageProps {
+  params: { id: string };
+}
+
+const ProductPage = ({ params }: ProductPageProps) => {
+  const { id } = params;
   const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
-    const response = async () => {
-      const res = await fetch("/data/products.json");
-      const data = await res.json();
-      const foundProduct = data.products.find(
-        (p: Product) => String(p.id) === id
-      );
-      if (!foundProduct) {
-        throw new Error("Product not found");
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/data/products.json");
+        const data = await res.json();
+        const foundProduct = data.products.find(
+          (p: Product) => String(p.id) === id
+        );
+        if (!foundProduct) throw new Error("محصول یافت نشد");
+        setProduct(foundProduct);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        setError(err?.message || "خطا در بارگذاری محصول");
+      } finally {
+        setLoading(false);
       }
-      setProduct(foundProduct);
     };
-    response();
+    fetchData();
   }, [id]);
 
-  const [selectedImage, setSelectedImage] = React.useState(0);
-  const [quantity, setQuantity] = React.useState(1);
+  if (loading)
+    return <div className="p-10 text-center">در حال بارگذاری...</div>;
+  if (error)
+    return <div className="p-10 text-center text-red-500">{error}</div>;
+  if (!product) return null;
+
+  const images = product.images || [];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* هدر محصول */}
+      {/* هدر */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-6 px-4 shadow-lg">
         <div className="container mx-auto">
           <h1 className="text-2xl md:text-3xl font-bold text-white">
-            {product?.name}
+            {product.name}
           </h1>
           <div className="flex items-center mt-2">
-            <div className="flex items-center bg-white/20 px-2 py-1 rounded-full">
-              <Star className="w-4 h-4 text-yellow-300 fill-yellow-300 mx-2" />
-              <span className="text-white text-sm ml-1">{product?.rating}</span>
-            </div>
+            {product.rating && (
+              <div className="flex items-center bg-white/20 px-2 py-1 rounded-full">
+                <Star className="w-4 h-4 text-yellow-300 fill-yellow-300 mx-2" />
+                <span className="text-white text-sm ml-1">
+                  {product.rating}
+                </span>
+              </div>
+            )}
             <span className="text-white/80 text-sm mr-2">(2 نظر)</span>
           </div>
         </div>
@@ -63,34 +86,26 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <div className="relative h-80 md:h-96 w-full">
               <Image
-                src={product?.images[selectedImage] || "/placeholder.png"}
-                alt={product?.name || "Product Image"}
+                src={images[selectedImage] || "/placeholder.png"}
+                alt={product.name}
                 fill
                 className="object-contain p-6"
               />
               <button
-                className="cursor-pointer absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition-all"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md"
                 onClick={() =>
-                  setSelectedImage((prev) =>
-                    product &&
-                    product.images &&
-                    prev < product.images.length - 1
-                      ? prev + 1
-                      : 0
+                  setSelectedImage(
+                    selectedImage === 0 ? images.length - 1 : selectedImage - 1
                   )
                 }
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
-                className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md transition-all"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-md"
                 onClick={() =>
-                  setSelectedImage((prev) =>
-                    prev > 0
-                      ? prev - 1
-                      : product?.images?.length
-                      ? product.images.length - 1
-                      : 0
+                  setSelectedImage(
+                    selectedImage === images.length - 1 ? 0 : selectedImage + 1
                   )
                 }
               >
@@ -98,7 +113,7 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
               </button>
             </div>
             <div className="flex p-4 space-x-2 overflow-x-auto">
-              {product?.images.map((img, index) => (
+              {images.map((img, index) => (
                 <button
                   key={index}
                   className={`flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 ${
@@ -122,44 +137,40 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
 
           {/* اطلاعات محصول */}
           <div className="bg-white rounded-xl shadow-lg p-6">
-            {/* قیمت و تخفیف */}
-            <div className="mb-6">
-              {product?.price && (
-                <>
-                  <div className="text-xl font-bold text-gray-900 text-nowrap">
-                    قیمت: {product.price.toLocaleString()} تومان
-                  </div>
-
-                  <div className="my-10 bg-green-100 p-4 text-justify">
-                    {product.price && (
-                      <Link
-                        href="tel:+989369782424"
-                        className=" hover:underline text-black font-semibold  rounded animate-pulse "
-                      >
-                        به علت نوسانات ارز برای اطلاع از قیمت دقیق و به روز با
-                        کارشناسان فروش ما تماس بگیرید
-                        <PhoneOutgoing className="inline mr-2" size={16} />
-                      </Link>
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
+            {product.price && (
+              <div className="mb-6">
+                <div className="text-xl font-bold text-gray-900">
+                  قیمت: {product.price.toLocaleString()} تومان
+                </div>
+                <div className="my-4 bg-green-100 p-4 text-justify">
+                  <Link
+                    href="tel:+989369782424"
+                    className="hover:underline text-black font-semibold rounded animate-pulse flex items-center"
+                  >
+                    به علت نوسانات ارز برای اطلاع از قیمت دقیق و به روز با
+                    کارشناسان تماس بگیرید
+                    <PhoneOutgoing className="inline mr-2" size={16} />
+                  </Link>
+                </div>
+              </div>
+            )}
 
             {/* ویژگی‌ها */}
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-3">ویژگی‌های محصول:</h3>
-              <ul className="space-y-2">
-                {product?.["benefits-and-properties"]?.map((feature, index) => (
-                  <li key={index} className="flex items-start">
-                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5 mr-2" />
-                    <span className="text-gray-700 text-sm md:text-lg">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {product.benefitsAndProperties?.length > 0 && (
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold mb-3">ویژگی‌های محصول:</h3>
+                <ul className="space-y-2">
+                  {product.benefitsAndProperties.map((feature, index) => (
+                    <li key={index} className="flex items-start">
+                      <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5 mr-2" />
+                      <span className="text-gray-700 text-sm md:text-lg">
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* تعداد و دکمه‌ها */}
             <div className="mb-6">
@@ -168,7 +179,7 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
                 <div className="flex items-center border rounded-lg overflow-hidden">
                   <button
                     className="px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
-                    onClick={() => setQuantity((q) => (q > 1 ? q - 1 : 1))}
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                   >
                     -
                   </button>
@@ -194,7 +205,7 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
               </div>
             </div>
 
-            {/* اطلاعات ارسال و گارانتی */}
+            {/* ارسال و گارانتی */}
             <div className="border-t pt-4">
               <div className="md:flex justify-between items-center">
                 <div className="flex items-center p-2">
@@ -214,77 +225,35 @@ const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         </div>
 
-        {/* توضیحات محصول */}
-        <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            مشخصات فنی
-          </h2>
-
-          <div className="overflow-x-auto rounded-lg border border-gray-200">
-            <table className="min-w-full table-auto text-sm">
-              <tbody>
-                {product?.["technical-specifications"]?.map((spec, idx) =>
-                  Object.entries(spec).map(([key, value], i) => (
+        {/* مشخصات فنی */}
+        {product.technicalSpecifications?.length > 0 && (
+          <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
+            <h2 className="text-xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              مشخصات فنی
+            </h2>
+            <div className="overflow-x-auto rounded-lg border border-gray-200">
+              <table className="min-w-full table-auto text-sm">
+                <tbody>
+                  {product.technicalSpecifications.map((spec, idx) => (
                     <tr
-                      key={`${idx}-${i}`}
+                      key={spec.id}
                       className={`${
-                        (idx + i) % 2 === 0 ? "bg-gray-50" : "bg-white"
+                        idx % 2 === 0 ? "bg-gray-50" : "bg-white"
                       } hover:bg-gray-100 transition-colors`}
                     >
                       <td className="py-3 px-4 text-gray-800 font-bold border-b border-gray-100">
-                        {key}
+                        {spec.key}
                       </td>
                       <td className="py-3 px-4 text-gray-600 border-b border-gray-100">
-                        {String(value)}
+                        {spec.value}
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-
-        {/* محصولات مرتبط */}
-        {/* <div className="mt-8">
-          <h2 className="text-xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            محصولات مشابه
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((item) => (
-              <div
-                key={item}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <div className="relative h-40">
-                  <Image
-                    src={`/hero-${item}.jpg`}
-                    alt={`محصول مشابه ${item}`}
-                    fill
-                    className="object-contain p-4"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-800 mb-1">
-                    شمع خودرو مدل XT-{3000 + item * 500}
-                  </h3>
-                  <div className="flex items-center mb-2">
-                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                    <span className="text-xs text-gray-500 mr-1">4.{item}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-blue-600">
-                      {(380000 + item * 20000).toLocaleString()} تومان
-                    </span>
-                    <button className="text-blue-500 hover:text-blue-700">
-                      <ShoppingCart className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div> */}
+        )}
       </div>
     </div>
   );

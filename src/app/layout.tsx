@@ -4,6 +4,8 @@ import LocalFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/sonner";
+import QueryClientWrapper from "@/container/QueryClientWrapper/QueryClientWrapper";
 
 export const metadata = {
   title: "شمع خودرو شایان | shayan spark plug",
@@ -95,8 +97,9 @@ export default function RootLayout({
     <html lang="fa" dir="rtl" className={`${samim.className} antialiased`}>
       <body>
         <Header />
-        {children}
+        <QueryClientWrapper>{children}</QueryClientWrapper>
         <Footer />
+        <Toaster />
       </body>
     </html>
   );

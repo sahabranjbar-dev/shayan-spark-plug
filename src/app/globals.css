@@ -3,12 +3,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* @font-face {
+@font-face {
   font-family: "IranianSans";
-  src: url("/fonts/Iranian-Sans.ttf") format("truetype");
+  src: url("/fonts/Samim-FD.woff2") format("woff");
   font-weight: 500;
   font-style: normal;
-} */
+}
+
+* {
+  font-family: "IranianSans";
+}
 
 @theme inline {
   --color-background: var(--background);

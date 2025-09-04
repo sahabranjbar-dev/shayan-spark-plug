@@ -33,6 +33,9 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isAuthPage =
+    pathname?.startsWith("/auth") || pathname?.startsWith("/dashboard");
+  if (isAuthPage) return;
   return (
     <>
       {/* Top Info Bar */}
