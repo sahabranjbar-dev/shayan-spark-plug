@@ -40,8 +40,6 @@ const ProductForm = ({ productData }: Props) => {
   const [previewImages, setPreviewImages] = useState<string[]>(
     productData?.images || []
   );
-  console.log({ productData });
-
   const form = useForm<ProductFormInputs>({
     defaultValues: {
       name: productData?.name || "",
@@ -93,7 +91,7 @@ const ProductForm = ({ productData }: Props) => {
         formData.append("id", productData?.id || undefined);
       }
       formData.append("name", data.name);
-      formData.append("price", data.price?.toString() ?? "");
+      formData.append("price", String(data.price).replace(/,/g, ""));
       if (data.rating) formData.append("rating", data.rating);
 
       formData.append(
@@ -186,7 +184,22 @@ const ProductForm = ({ productData }: Props) => {
                 <FormItem>
                   <FormLabel>قیمت (تومان)</FormLabel>
                   <FormControl>
-                    <Input {...field} type="number" />
+                    <Input
+                      {...field}
+                      type="text"
+                      value={
+                        field.value !== null && field.value !== undefined
+                          ? field.value.toLocaleString("fa")
+                          : ""
+                      }
+                      onChange={(e) => {
+                        field.onChange(
+                          e.target.value
+                            .replace(/[٬,]/g, "")
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        );
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

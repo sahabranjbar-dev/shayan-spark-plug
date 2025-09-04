@@ -35,9 +35,16 @@ const RowTableButtons = ({ id, refetch }: Props) => {
   return (
     <>
       <Link href={`/dashboard/products/${id}`}>
-        <Button variant="outline" size="sm" className="flex items-center gap-1">
-          <Pencil size={16} />
-          ویرایش
+        <Button
+          variant="outline"
+          size="sm"
+          className="flex items-center gap-1"
+          asChild
+        >
+          <div key={id} className="flex items-center gap-1">
+            <Pencil size={16} />
+            ویرایش
+          </div>
         </Button>
       </Link>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -46,9 +53,12 @@ const RowTableButtons = ({ id, refetch }: Props) => {
             variant="destructive"
             size="sm"
             className="flex items-center gap-1"
+            asChild
           >
-            <Trash2 size={16} />
-            حذف
+            <div className="flex items-center gap-1" key={id}>
+              <Trash2 size={16} />
+              حذف
+            </div>
           </Button>
         </DialogTrigger>
         <DialogContent>
